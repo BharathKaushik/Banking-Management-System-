@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loan EMI Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='emi1.css') }}">
+</head>
+<body>
+
+    <div class="emi-container">
+
+        <h1>Loan EMI Details</h1>
+      
+        <div class="emi-box">
+      
+          <div class="emi-info">
+            <p><strong>Total Loan:</strong> ₹{{ loan_amount }}</p>
+            <p><strong>Outstanding:</strong> ₹{{ outstanding }}</p>
+            <p><strong>Monthly EMI:</strong> ₹{{ emi_amount }}</p>
+            <p><strong>Last EMI Paid:</strong> {{ last_paid }}</p>
+            <p><strong>Balance</strong> ₹ {{ balance }}</p>
+          </div>
+
+          <!-- 🔽 PROPERTY IMAGE ADDED HERE -->
+          {% if property_image %}
+          <div style="margin-top: 20px; text-align: center;">
+            <h3>Property / Asset Image</h3>
+            <img 
+              src="/{{ property_image }}" 
+              alt="Property Image"
+              style="max-width: 300px; border-radius: 10px; margin-top: 10px;"
+            >
+          </div>
+          {% endif %}
+      
+          <!-- Progress -->
+          <div class="progress-wrapper">
+            <div class="progress-text">{{ progress }}% paid</div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: {{ progress }}%"></div>
+            </div>
+          </div>
+      
+          <!-- Pay EMI -->
+          {% if already_paid %}
+            <button class="btn disabled">EMI already paid this month</button>
+          {% else %}
+            <form method="POST">
+              <button class="btn">Pay EMI</button>
+            </form>
+          {% endif %}
+      
+          <hr>
+      
+        <!-- Partial Prepayment -->
+        <h3>Partial Prepayment</h3>
+        <form method="POST" action="{{ url_for('partial_prepay', loan_id=loan_id) }}">
+          <input type="number" name="amount" placeholder="Enter amount" class="input" required>
+          <button class="btn secondary">Prepay</button>
+        </form>
+
+        <hr>
+
+        <!-- Foreclosure -->
+        <h3>Foreclosure</h3>
+        <p class="saving-text">
+          💰 You save ₹ {{ savings }} by foreclosing now
+        </p>
+        
+        <form method="POST" action="{{ url_for('foreclose', loan_id=loan_id) }}">
+          <button class="btn danger">Foreclose Loan</button>
+        </form>
+
+        </div>
+      
+        <a href="{{ url_for('emi_dashboard') }}" class="back">
+          ← Back to EMI Dashboard
+        </a>
+      
+      </div>
+
+</body>
+</html>

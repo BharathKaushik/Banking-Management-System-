@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fund Transfer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='FT.css') }}">
+</head>
+<body>
+
+<!-- FLASH MESSAGES -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div id="flash-message" class="flash {{ category }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<div class="transfer-container">
+
+    <h1>Fund Transfer</h1>
+    <p class="subtitle">Transfer money securely to another bank account</p>
+
+    <!-- ================= FORM ================= -->
+    <form method="POST" id="transferForm" class="transfer-box">
+
+        <!-- RECEIVER DETAILS -->
+        <div class="section">
+            <h2>Receiver Details</h2>
+
+            <div class="field">
+                <label>Card Holder Name</label>
+                <input type="text" name="receiver_name"
+                       placeholder="Enter receiver name" required>
+            </div>
+
+            <div class="field">
+                <label>Card Number</label>
+                <input type="text" name="card_number"
+                       placeholder="XXXX XXXX XXXX XXXX"
+                       maxlength="19" required>
+            </div>
+
+            <div class="row">
+                <div class="field">
+                    <label>Expiry Date</label>
+                    <input type="text" name="expiry_date"
+                           placeholder="MM/YY" required>
+                </div>
+
+                <div class="field">
+                    <label>CVV</label>
+                    <input type="password" name="cvv"
+                           placeholder="***" maxlength="3" required>
+                </div>
+            </div>
+        </div>
+
+        <!-- TRANSFER DETAILS -->
+        <div class="section">
+            <h2>Transfer Details</h2>
+
+            <div class="field">
+                <label>Amount</label>
+                <input type="number" name="amount"
+                       placeholder="Enter amount" required>
+            </div>
+
+            <div class="field">
+                <label>Remarks (Optional)</label>
+                <input type="text" name="description"
+                       placeholder="Eg: Rent payment">
+            </div>
+
+            <!-- BUTTON OPENS MPIN MODAL -->
+            <button type="button" class="transfer-btn"
+                    onclick="openMpinModal()">
+                Transfer Money
+            </button>
+        </div>
+
+    </form>
+
+    <a href="{{ url_for('dashboard') }}" class="back">← Back to Dashboard</a>
+</div>
+
+<!-- ================= MPIN MODAL ================= -->
+<div id="mpinModal" class="modal">
+    <div class="modal-box">
+        <h3>Enter MPIN</h3>
+
+        <!-- 4 MPIN BOXES -->
+        <div class="mpin-boxes">
+            <input type="password" maxlength="1" class="mpin-input" inputmode="numeric">
+            <input type="password" maxlength="1" class="mpin-input" inputmode="numeric">
+            <input type="password" maxlength="1" class="mpin-input" inputmode="numeric">
+            <input type="password" maxlength="1" class="mpin-input" inputmode="numeric">
+        </div>
+
+        <!-- Hidden MPIN (Flask reads this) -->
+        <input type="hidden" name="mpin" id="mpinHidden"
+               form="transferForm" required>
+
+        <div class="modal-actions">
+            <button type="submit" form="transferForm">Confirm</button>
+            <button type="button" onclick="closeMpinModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- ================= JAVASCRIPT ================= -->
+<script>
+function openMpinModal() {
+    document.getElementById("mpinModal").style.display = "flex";
+    document.querySelector(".mpin-input").focus();
+}
+
+function closeMpinModal() {
+    document.getElementById("mpinModal").style.display = "none";
+}
+
+// Auto-hide flash message
+setTimeout(() => {
+    const flash = document.getElementById("flash-message");
+    if (flash) {
+        flash.style.opacity = "0";
+        setTimeout(() => flash.remove(), 500);
+    }
+}, 5000);
+
+// MPIN logic
+const mpinInputs = document.querySelectorAll(".mpin-input");
+const mpinHidden = document.getElementById("mpinHidden");
+
+mpinInputs.forEach((input, index) => {
+    input.addEventListener("input", () => {
+        if (!/^[0-9]$/.test(input.value)) {
+            input.value = "";
+            return;
+        }
+
+        if (index < mpinInputs.length - 1) {
+            mpinInputs[index + 1].focus();
+        }
+        updateMpin();
+    });
+
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace" && !input.value && index > 0) {
+            mpinInputs[index - 1].focus();
+        }
+    });
+});
+
+function updateMpin() {
+    mpinHidden.value = Array.from(mpinInputs)
+        .map(i => i.value)
+        .join("");
+}
+</script>
+
+</body>
+</html>

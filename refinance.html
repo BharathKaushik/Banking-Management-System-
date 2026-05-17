@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Refinancing Offer</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='refinance.css') }}">
+</head>
+
+<body>
+
+<div class="refi-page">
+
+    <div class="glass-hero">
+        <h1>Refinance Your {{ loan_type }} Loan</h1>
+        <p class="hero-sub">
+            Switch to Tick Bank and unlock smarter savings
+        </p>
+    </div>
+
+    <div class="glass-card">
+
+        <h3>Tick Bank Smart Refinance</h3>
+
+        <div class="rate-box">
+            <span>New Rate</span>
+            <h2>{{ offer.rate }}</h2>
+        </div>
+
+        <div class="saving-box">
+            <span>You Save</span>
+            <h2>{{ offer.saving }}</h2>
+        </div>
+
+        <p class="quote">
+            "{{ offer.quote }}"
+        </p>
+
+        <a href="#" class="glass-btn" onclick="openPolicy()">Switch to Tick Bank</a>
+
+        <!-- POLICY MODAL -->
+        <div id="policyModal" class="modal">
+
+            <div class="modal-box">
+  
+                <h3>Refinance Policy</h3>
+  
+                    <p>
+                        This Agreement confirms that the customer voluntarily requests the refinancing and transfer of an existing loan from a previous financial institution to TICK BANK and authorizes the bank to obtain, 
+                        verify, and use all financial and personal information required to evaluate creditworthiness and repayment capacity. By proceeding, the customer certifies that all documents and statements provided are true, 
+                        complete, and not misleading, and understands that any false declaration, omission, or fraudulent representation may result in cancellation of the refinancing request and possible legal action. 
+                        The customer authorizes TICK BANK to directly settle the outstanding loan amount with the previous lender through secure bank-to-bank transfer and agrees that no cash settlement or unauthorized third-party handling of funds will be permitted. 
+                        Upon approval, the customer accepts the revised interest rate, repayment schedule, tenure, and applicable charges disclosed prior to execution, and agrees to repay the refinanced loan according to the agreed terms from the activation date. 
+                        The customer acknowledges that refinancing may not always reduce total interest cost and confirms that the decision to refinance is made independently after reviewing all repayment obligations. The customer further agrees to maintain timely payments,
+                        notify the bank of any significant financial changes, and cooperate with verification or compliance checks required by law. All transactions shall follow applicable banking regulations, consumer protection standards, and data privacy requirements,
+                        and the bank will maintain a secure audit trail for all settlement activities. The customer agrees not to share confidential banking credentials and recognizes that the bank will never request sensitive authentication details through unauthorized channels.
+                        Any disputes arising from this refinancing shall be subject to the jurisdiction of the courts in Tamil Nadu. By signing or digitally consenting to this Agreement, the customer confirms full understanding and acceptance of these terms and conditions and 
+                        enters into this refinancing arrangement willingly and legally.
+                    </p>
+  
+                <form method="POST" action="/refinance/approve">
+  
+                <button type="submit" class="glass-btn">
+                    Agree & Continue
+                </button>
+  
+                <button type="button" class="cancel"
+                    onclick="closePolicy()">
+                Cancel
+                </button>
+  
+                </form>
+  
+            </div>
+        </div>
+        <script>
+            function openPolicy() {
+              document.getElementById("policyModal").style.display = "flex";
+            }
+            
+            function closePolicy() {
+              document.getElementById("policyModal").style.display = "none";
+            }
+        </script>
+    </div>
+    
+
+    <a href="/dashboard" class="back">← Back to Dashboard</a>
+
+</div>
+
+</body>
+</html>

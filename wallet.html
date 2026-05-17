@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Wallet</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='wallet.css') }}">
+</head>
+<body>
+
+<div class="wallet-container">
+
+    <h1>My Wallet</h1>
+    <p class="subtitle">Manage your card and account</p>
+
+    <!-- CARD -->
+    <div class="wallet-card">
+        <p class="name">{{ name }}</p>
+        <p class="number">{{ card_number }}</p>
+        <div class="card-footer">
+            <span>Exp {{ expiry }}</span>
+            <span>{{ acc_type }}</span>
+        </div>
+    </div>
+
+    <!-- BALANCE -->
+    <div class="balance-box">
+        <p>Available Balance</p>
+        <h2>₹ {{ balance }}</h2>
+        <span class="status">Active</span>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="actions">
+        <a href="{{ url_for('fund_transfer') }}" class="btn primary">Transfer Money</a>
+        <a href="{{ url_for('transactions_page') }}" class="btn secondary">View Statement</a>
+    </div>
+
+    <!-- TRANSACTIONS -->
+    <div class="wallet-transactions">
+        <h3>Recent Activity</h3>
+        <ul>
+            {% for t in transactions %}
+            <li>
+                <span>{{ t[0] }}</span>
+                <span class="{{ 'credit' if t[2]=='CREDIT' else 'debit' }}">
+                    {{ '+' if t[2]=='CREDIT' else '-' }}₹{{ t[1] }}
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <a href="{{ url_for('dashboard') }}" class="back">← Back to Dashboard</a>
+
+</div>
+
+</body>
+</html>

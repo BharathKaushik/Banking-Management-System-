@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+  }
+  
+  body {
+    background: #0f172a;
+    color: #e5e7eb;
+  }
+  
+/* Center layout */
+.emi-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* EMI card */
+.emi-box {
+  width: 420px;
+  max-width: 95%;
+  background: rgba(17,24,39,0.95);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  border: 1px solid #1f2937;
+  backdrop-filter: blur(12px);
+}
+
+/* info block */
+.emi-info {
+  background: #0b1220;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* PROGRESS */
+.progress-wrapper {
+    margin: 20px 0;
+  }
+  
+  .progress-text {
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+  
+  .progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #1f2933;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #22c55e, #4ade80);
+  }
+/* inputs */
+.input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: none;
+  background: #111827;
+  color: white;
+  outline: none;
+}
+
+/* buttons */
+.btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 10px;
+  background: #2563eb;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background: #1d4ed8;
+}
+
+.btn.secondary {
+  background: #f59e0b;
+}
+
+.btn.secondary:hover {
+  background: #d97706;
+}
+
+.btn.danger {
+  background: #ef4444;
+}
+
+.btn.danger:hover {
+  background: #dc2626;
+}
+
+.btn.disabled {
+  background: #374151;
+  cursor: not-allowed;
+}
+
+/* divider */
+hr {
+  border: none;
+  border-top: 1px solid #1f2937;
+  margin: 18px 0;
+}
+
+/* back link */
+.back {
+  margin-top: 20px;
+  color: #93c5fd;
+  text-decoration: none;
+}
+
+.back:hover {
+  text-decoration: underline;
+}

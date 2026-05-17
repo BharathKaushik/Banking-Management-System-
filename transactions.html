@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transactions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='transactions.css') }}">
+</head>
+<body>
+
+<div class="page">
+
+    <h1>Transaction History</h1>
+    <p class="subtitle">Detailed statement of your account</p>
+    <div class="export-buttons">
+        <a href="{{ url_for('export_transactions_csv') }}">Export CSV</a>
+        <a href="{{ url_for('export_transactions_pdf') }}">Export PDF</a>
+    </div>
+    
+    
+
+    <div class="table-box">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Txn ID</th>
+                    <th>Description</th>
+                    <th>Debit (₹)</th>
+                    <th>Credit (₹)</th>
+                    <th>Balance (₹)</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for t in transactions %}
+                <tr>
+                    <td>{{ t.date }}</td>
+                    <td class="txn">{{ t.txn_id }}</td>
+                    <td>{{ t.desc }}</td>
+
+                    <td class="debit">
+                        {% if t.debit %}{{ t.debit }}{% endif %}
+                    </td>
+
+                    <td class="credit">
+                        {% if t.credit %}{{ t.credit }}{% endif %}
+                    </td>
+
+                    <td class="balance">₹ {{ t.balance }}</td>
+                    <td class="status">{{ t.status }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="7" class="empty">No transactions found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ url_for('dashboard') }}" class="back">← Back to Dashboard</a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+:root {
+  --bg: #1c1f2a;
+  --panel: #232634;
+  --text: #edeef3;
+  --muted: #a1a6c8;
+  --green: #22c55e;
+  --red: #ef4444;
+  --border: rgba(255,255,255,0.08);
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.page {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin-bottom: 25px;
+}
+
+.table-box {
+  background: var(--panel);
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  padding: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+td {
+  padding: 14px 12px;
+  border-top: 1px solid var(--border);
+}
+
+.txn {
+  font-family: monospace;
+  color: #7c6bff;
+}
+
+.debit {
+  color: var(--red);
+  font-weight: 600;
+}
+
+.credit {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.balance {
+  font-weight: 600;
+}
+
+.status {
+  color: var(--green);
+}
+
+.empty {
+  text-align: center;
+  padding: 20px;
+  color: var(--muted);
+}
+
+.back {
+  display: inline-block;
+  margin-top: 20px;
+  color: #7c6bff;
+  text-decoration: none;
+}
+.export-buttons {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 15px;
+  }
+  
+  .export-buttons a {
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #7c6bff, #4d7cfe);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  
+  

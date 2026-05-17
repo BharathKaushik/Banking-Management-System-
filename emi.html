@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My EMIs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='emi.css') }}">
+</head>
+<body>
+
+<div class="emi-container">
+    <h1>My Active Loans</h1>
+
+    {% if loans %}
+    <div class="loan-grid">
+        {% for loan in loans %}
+        <div class="loan-card">
+            <h3>{{ loan[1] }}</h3>
+
+            <p><strong>Loan Amount:</strong> ₹ {{ loan[2] }}</p>
+            <p><strong>Monthly EMI:</strong> ₹ {{ loan[3] }}</p>
+            <p class="status active">Status: {{ loan[4] }}</p>
+
+            <a href="{{ url_for('emi_detail', loan_id=loan[0]) }}" class="btn">
+                Pay EMI
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p class="empty">No active loans found</p>
+    {% endif %}
+
+    <a href="{{ url_for('dashboard') }}" class="back">← Back to Dashboard</a>
+</div>
+
+</body>
+</html>

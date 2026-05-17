@@ -1,0 +1,120 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #1C1F2A;
+  color: #EDEEF3;
+}
+
+.wallet-container {
+  max-width: 420px;
+  margin: 50px auto;
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  color: #A1A6C8;
+  margin-bottom: 30px;
+}
+
+/* CARD */
+.wallet-card {
+  background: linear-gradient(135deg, #7C6BFF, #4D7CFE);
+  border-radius: 20px;
+  padding: 24px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.wallet-card .name {
+  font-size: 14px;
+}
+
+.wallet-card .number {
+  font-size: 18px;
+  letter-spacing: 3px;
+  margin: 12px 0;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+/* BALANCE */
+.balance-box {
+  background: #232634;
+  padding: 18px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+
+.balance-box p {
+  color: #A1A6C8;
+  font-size: 13px;
+}
+
+.status {
+  color: #22C55E;
+  font-size: 12px;
+}
+
+/* ACTIONS */
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.btn {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.primary {
+  background: #7C6BFF;
+  color: white;
+}
+
+.secondary {
+  background: rgba(255,255,255,0.08);
+  color: #EDEEF3;
+}
+
+/* TRANSACTIONS */
+.wallet-transactions h3 {
+  margin-bottom: 10px;
+}
+
+.wallet-transactions ul {
+  list-style: none;
+  padding: 0;
+}
+
+.wallet-transactions li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.credit {
+  color: #22C55E;
+}
+
+.debit {
+  color: #EF4444;
+}
+.back {
+    display: inline-block;
+    margin-top: 20px;
+    color: #7c6bff;
+    text-decoration: none;
+  }

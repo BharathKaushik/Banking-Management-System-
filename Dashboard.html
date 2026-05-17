@@ -1,0 +1,234 @@
+<!-- eslint-disable -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bank Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    
+<div class="container">
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+        <h2 class="logo">Tick Bank</h2>
+
+        <ul class="menu">
+            <li class="{{ 'active' if request.endpoint == 'dashboard' else '' }}">
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            </li>
+
+            <li class="{{ 'active' if request.endpoint == 'fund_transfer' else '' }}">
+                <a href="{{ url_for('fund_transfer') }}">Fund Transfer</a>
+            </li>
+
+            <li class="{{ 'active' if request.endpoint == 'transactions_page' else '' }}">
+                <a href="{{ url_for('transactions_page') }}">Transactions</a>
+            </li>
+
+            <li class="{{ 'active' if request.endpoint == 'loans' else '' }}">
+                <a href="{{ url_for('loans') }}">Loans</a>
+            </li>
+
+            <li class="{{ 'active' if request.endpoint == 'emi' else '' }}">
+                <a href="{{ url_for('emi_dashboard') }}">EMI</a>
+            </li>
+
+            <li class="{{ 'active' if request.endpoint == 'wallet' else '' }}">
+                <a href="{{ url_for('wallet') }}">My Wallet</a>
+            </li>
+        </ul>
+
+        <a href="{{ url_for('logout') }}" class="logout">Logout</a>
+    </aside>
+
+    <!-- ================= CONTENT ================= -->
+    <div class="content">
+
+        <!-- ================= MAIN ================= -->
+        <main class="main">
+            <div class="banner" id="banner">
+                <div class="slides" id="slides">
+              
+                  <div class="slide">
+                    <img src="https://i.postimg.cc/Hs2r1wpn/Getting-money.png" alt="Banner 1">
+                  </div>
+              
+                  <div class="slide">
+                    <img src="https://i.postimg.cc/52rNfpD6/Refinancing.jpg" alt="Banner 2">
+                  </div>
+              
+                  <div class="slide">
+                    <img src="https://i.postimg.cc/xdcr12MM/Bank1.jpg" alt="Banner 3">
+                  </div>
+
+                  <div class="slide">
+                    <img src="https://i.postimg.cc/6Q9JJZpW/bank.jpg" alt="Banner 4">
+                  </div>
+              
+                </div>
+              
+                <button class="nav-btn prev" onclick="prevSlide()">❮</button>
+                <button class="nav-btn next" onclick="nextSlide()">❯</button>
+                </div>
+              
+                <script>
+                let index = 0;
+                const slides = document.getElementById("slides");
+                const total = slides.children.length;
+                let autoSlide;
+              
+                function showSlide(i) {
+                    index = (i + total) % total;
+                    slides.style.transform = `translateX(-${index * 100}%)`;
+                }
+              
+                function nextSlide() {
+                    showSlide(index + 1);
+                }
+              
+                function prevSlide() {
+                    showSlide(index - 1);
+                }
+              
+                function startAutoSlide() {
+                    autoSlide = setInterval(nextSlide, 3000);
+                }
+              
+                function stopAutoSlide() {
+                    clearInterval(autoSlide);
+                }
+              
+                document.getElementById("banner").addEventListener("mouseenter", stopAutoSlide);
+                document.getElementById("banner").addEventListener("mouseleave", startAutoSlide);
+              
+                startAutoSlide();
+                </script>
+              
+            <h1>Good Evening, {{ name }}</h1>
+
+            {% if ext_loans != "NO" %}
+            <div class="refi-banner-glass">
+
+                <div class="refi-content">
+                    <h3>Refinance Opportunity 💰</h3>
+                    <p>
+                        Switch your {{ ext_loan_type }} loan to Tick Bank
+                        and save thousands in interest.
+                    </p>
+                </div>
+
+                <a href="{{ url_for('refinance') }}" class="refi-action">
+                View Offer →
+                </a>
+
+            </div>
+            {% endif %}
+
+
+            <!-- INFO CARDS -->
+            <div class="cards">
+                <div class="card">
+                    <p>Total Balance</p>
+                    <h2>₹ {{ balance }}</h2>
+                </div>
+                <div class="card">
+                    <p>Total Spent</p>
+                    <h2>₹ {{ spent }}</h2>
+                </div>
+                <div class="card">
+                    <p>Total Saving</p>
+                    <h2>₹ {{ saving }}</h2>
+                </div>
+            </div>
+
+            <!-- CHART -->
+            <div class="chart-box">
+                <h3>Account Statistics</h3>
+                <canvas id="balanceChart"></canvas>
+            </div>
+
+            <!-- RECENT TRANSACTIONS -->
+            <div class="transactions">
+                <h3>Recent Transactions</h3>
+                <table>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                    {% for t in transactions %}
+                    <tr>
+                        <td>{{ t.date }}</td>
+                        <td>{{ t.desc }}</td>
+                        <td class="{{ 'credit' if t.amount > 0 else 'debit' }}">
+                            ₹ {{ t.amount }}
+                        </td>
+                        <td>{{ t.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </main>
+
+        <!-- ================= WALLET ================= -->
+        <aside class="wallet">
+            <h3>My Wallet</h3>
+
+            <div class="bank-card">
+                <p class="card-name">{{ name }}</p>
+                <p class="card-number">**** **** **** 2197</p>
+                <p class="card-exp">Exp 06/30</p>
+            </div>
+
+            <h4>Card Activities</h4>
+            <ul class="activity">
+                {% for a in card_activities %}
+                <li>
+                    {{ a.desc }}
+                    <span class="{{ 'credit' if a.amount > 0 else 'debit' }}">
+                        {{ '+' if a.amount > 0 else '-' }}₹{{ a.amount | abs }}
+                    </span>
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
+
+    </div>
+</div>
+
+<!-- ================= CHART DATA ================= -->
+<script>
+    const chartLabels = {{ chart_labels | tojson }};
+    const chartData = {{ chart_data | tojson }};
+</script>
+
+<script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+
+    {% if ext_loans != "NO" %}
+    <div id="refiPopup" class="popup">
+        <div class="popup-box">
+            <h3>Refinancing Offer 💰</h3>
+            <p>You may save money by refinancing your external loans with us.</p>
+            <a href="{{ url_for('refinance') }}" class="btn">View Offers</a>
+            <button onclick="closePopup()" class="btn">Close</button>
+        </div>
+    </div>
+    
+    <script>
+    function closePopup(){
+        document.getElementById("refiPopup").style.display="none";
+    }
+    </script>
+    {% endif %}
+    
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='loans.css') }}">
+
+<form method="POST" enctype="multipart/form-data">
+  
+  <label>Loan Type</label>
+  <select name="loan_type">
+    <option>Home Loan</option>
+    <option>Education Loan</option>
+    <option>Personal Loan</option>
+    <option>Vehicle Loan</option>
+    <option>Gold Loan</option>
+  </select>
+
+  <label>Property / Asset Details</label>
+
+  <div class="upload-box" onclick="document.getElementById('file-upload').click()">
+    <label for="file-upload">Upload Property Image</label>
+    <input 
+      id="file-upload" 
+      type="file" 
+      name="property_image" 
+      accept="image/*"
+      hidden
+      required
+    >
+  </div>
+
+  <p id="file-name" style="color: #aaa; font-size: 14px;"></p>
+
+  <label>Loan Amount</label>
+  <input type="number" name="amount" required>
+
+  <label>Tenure (Months)</label>
+  <input type="number" name="tenure" required>
+
+  <button type="submit">Apply Loan</button>
+
+  <div>
+    <a href="{{ url_for('dashboard') }}" class="back">← Back to Dashboard</a>
+  </div>
+
+</form>
+
+<script>
+  const fileInput = document.getElementById("file-upload");
+  const fileNameText = document.getElementById("file-name");
+
+  fileInput.addEventListener("change", function() {
+    if (this.files.length > 0) {
+      fileNameText.textContent = "Selected: " + this.files[0].name;
+    } else {
+      fileNameText.textContent = "";
+    }
+  });
+</script>
